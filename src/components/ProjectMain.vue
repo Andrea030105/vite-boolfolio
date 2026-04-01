@@ -20,6 +20,7 @@ export default {
         getProject(project_page) {
             this.loading = true;
             axios.get(`${this.baseUrl}/api/projects`, { params: { page: project_page } }).then((response) => {
+                console.log(response.data);
                 this.projects = response.data.projects.data;
                 this.loading = false;
                 this.current_page = response.data.projects.current_page;
@@ -48,14 +49,14 @@ export default {
                 <div class="loader"></div>
             </div>
         </div>
-        <div class="row">
+        <div v-if="loading == false" class="row">
             <div class="col d-flex flex-wrap gap-5 my-3">
                 <div v-for="project in projects" :key="project.id" class="card" style="width: 18rem;">
                     <ProjectCard :project="project" :baseUrl="baseUrl" />
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div v-if="loading == false" class="row my-4">
             <div class="col d-flex justify-content-center">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -65,7 +66,8 @@ export default {
                                 Prev
                             </a>
                         </li>
-                        <li class="page-item" v-for="i in last_page" :class="current_page == i ? 'disabled' : ''">
+                        <li class="page-item" v-for="i in last_page" :key="i"
+                            :class="current_page == i ? 'disabled' : ''">
                             <a @click="getProject(i)" class="page-link">{{ i }}</a>
                         </li>
                         <li class="page-item">

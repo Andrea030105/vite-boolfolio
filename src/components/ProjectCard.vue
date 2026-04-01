@@ -18,6 +18,29 @@ export default {
         <h5>
             {{ project.title }}
         </h5>
+        <div>
+            <h6>
+                <strong>
+                    Linguaggio:
+                </strong>
+            </h6>
+            <span v-if="project.type" class="badge bg-info mx-1">
+                {{ project.type.name }}
+            </span>
+            <span v-else>
+                Non Specificato
+            </span>
+        </div>
+        <div>
+            <h6>
+                <strong>
+                    Tecnologies:
+                </strong>
+            </h6>
+            <span class="badge bg-primary mx-1" v-for="technology in project.technologies" :key="technology.id">
+                {{ technology.name }}
+            </span>
+        </div>
         <p class="card-text">
             {{ project.description }}
         </p>
